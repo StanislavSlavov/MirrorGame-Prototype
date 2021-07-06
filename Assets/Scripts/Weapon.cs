@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] float fireRate = 1f;
+     [SerializeField] float fireRate = 1f;
     float nextFire;
-    bool alreadyShot = false;
-    int shotsFired;
     [SerializeField] Transform shootingPoint;
     [SerializeField] GameObject shootPrefab;
+    AudioSource audioSource;
+    [SerializeField] AudioClip shootSFX;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         nextFire = Time.time;
     }
 
@@ -32,10 +34,9 @@ public class Weapon : MonoBehaviour
     {
         if (Time.time > nextFire)
         {   
-            nextFire = Time.time + fireRate;   
+            nextFire = Time.time + fireRate;
+            audioSource.PlayOneShot(shootSFX);
             Shoot();
-            shotsFired ++;
-            Debug.Log(shotsFired);    
         }
     }
 }
